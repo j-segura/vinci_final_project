@@ -1,22 +1,61 @@
-<script setup>
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import { Head } from '@inertiajs/vue3';
-</script>
-
 <template>
     <Head title="Dashboard" />
 
     <AuthenticatedLayout>
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">Dashboard</h2>
-        </template>
-
-        <div class="py-12">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                    <div class="p-6 text-gray-900">You're logged in!</div>
-                </div>
+        <div class="header">
+            <div class="header-img">
+                <img :src="imagenUrl" alt="">
             </div>
+            <div class="header-content">
+                <h1>Find your favorite artiste</h1>
+                <input type="search" placeholder="Search...">
+                <p>More than 1000 artists, designers & creative people</p>
+            </div>
+            {{ imagenUrl }}
         </div>
     </AuthenticatedLayout>
 </template>
+
+<script>
+
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import { Head } from '@inertiajs/vue3';
+
+export default {
+
+    components: {
+
+        AuthenticatedLayout,
+        Head,
+
+    },
+
+    data() {
+
+        return {
+
+        imagenUrl: `${this.$page.props.appUrl}/imagenes/imagen.jpg`
+
+        };
+
+    },
+
+}
+
+</script>
+
+
+
+<style>
+
+/* header {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #FF4B4B;
+    height: 5rem;
+} */
+
+</style>
