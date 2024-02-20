@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class Reference extends Model
 {
     use HasFactory;
+
+    protected $guarded = [];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id');
+    }
 }
