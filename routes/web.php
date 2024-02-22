@@ -35,4 +35,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/subscription-plans', function () {
+    return Inertia::render('SubscriptionPlans');
+})->middleware(['auth', 'verified'])->name('subscription.plans');
+
 require __DIR__.'/auth.php';

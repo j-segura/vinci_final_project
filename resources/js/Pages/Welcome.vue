@@ -63,7 +63,7 @@ defineProps({
         </div>
         <div class="welcome-modal">
             <h1>Welcome to<br>Vinci</h1>
-            <p>the best web site to find an artist</p>
+            <p>Where art finds its voice, and talents find their way.</p>
             <div v-if="canLogin">
             <Link
                 v-if="$page.props.auth.user"
@@ -72,21 +72,27 @@ defineProps({
             >
 
             <template v-else>
-                <Link
-                    href="/google-auth/redirect"
-                    >Sing in with google</Link
-                >
+                <div class="authentication-btns">
+                    <Link
+                        :href="route('login')"
+                        class="boton boton-secondary"
+                        >Log in</Link
+                    >
 
-                <Link
-                    :href="route('login')"
-                    >Log in</Link
-                >
-
-                <Link
-                    v-if="canRegister"
-                    :href="route('register')"
-                    >Register</Link
-                >
+                    <Link
+                        v-if="canRegister"
+                        :href="route('register')"
+                        class="boton"
+                        >Register</Link
+                    >
+                </div>
+                <div>
+                    <Link
+                        href="/google-auth/redirect"
+                        class="boton"
+                        >Sing in with google</Link
+                    >
+                </div>
             </template>
         </div>
         </div>
