@@ -174,19 +174,3 @@ export default {
 }
 
 </script>
-
-
-
-<style>
-
-/* header {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: #FF4B4B;
-    height: 5rem;
-} */
-
-</style>
