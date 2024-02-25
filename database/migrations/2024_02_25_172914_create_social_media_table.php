@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\Reference;
-use Brick\Math\BigInteger;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -14,16 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('social_media', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->strign('name');
+            $table->id();
+            $table->string('name');
             $table->string('url');
             $table->string('icon');
-            $table->unsignedInteger('user_id');
+            $table->unsignedBigInteger('user_id');
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->timestamps();
-
         });
     }
 
