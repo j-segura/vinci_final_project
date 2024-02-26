@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
+        Schema::create('subscription_plans', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('image');
+            $table->double('price', 16, 5);
+            $table->integer('frequency');
+            $table->json('features');
             $table->timestamps();
         });
     }
@@ -23,7 +25,7 @@ return new class extends Migration
      * Reverse the migrations.
      */
     public function down(): void
-    {
-        Schema::dropIfExists('categories');
+    { 
+        Schema::dropIfExists('subscription_plans');
     }
 };

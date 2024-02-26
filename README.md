@@ -2,15 +2,11 @@
 
 Título: Vinci - Descubre Arte, Encuentra Talentos
 
-Logo: [Incluir el logo de Vinci]
-
 Slogan: "Donde el arte encuentra su voz, y los talentos su camino."
 
 Propósito: Vinci es una plataforma web dedicada a potenciar la visibilidad y oportunidades para artistas emergentes. Nuestro propósito es proporcionar a los artistas un espacio donde puedan crear y mostrar sus portafolios de arte, conectándolos con reclutadores y profesionales de la industria que buscan talento fresco y prometedor.
 
 Descripción: Vinci es mucho más que una simple plataforma de portafolios de arte en línea. Es un ecosistema dinámico donde los artistas pueden destacar sus obras más creativas y originales, y donde los reclutadores pueden descubrir y contactar talentos emergentes con facilidad. Nuestra plataforma está diseñada con un enfoque en la experiencia del usuario, brindando herramientas intuitivas y una interfaz fluida para navegar por el arte y las habilidades de los creadores.
-
-Alcance del Proyecto en TI:
 
 Lenguaje de Programación: Vinci está desarrollado utilizando el framework Laravel junto con Inertia.js y Vue.js, lo que garantiza un desarrollo eficiente y robusto del lado del servidor y del cliente. Estas tecnologías nos permiten crear una experiencia de usuario moderna y receptiva.
 

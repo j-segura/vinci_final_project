@@ -12,10 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('references', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->id();
             $table->text('content');
-            $table->unsignedInteger('user_id');
-            $table->unsignedInteger('author_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('author_id');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
