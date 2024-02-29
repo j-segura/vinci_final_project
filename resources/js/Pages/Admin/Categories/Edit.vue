@@ -1,6 +1,6 @@
 <template>
     <AdminNav>
-        <h2>Create category</h2>
+        <h2>Edit Category</h2>
         <form @submit.prevent="submit">
             <div class="space-y-6">
                 <div>
@@ -28,7 +28,7 @@
 
 
             <div class="mt-8">
-                <button type="submit">Create Company</button>
+                <button type="submit">Edit Company</button>
             </div>
         </form>
     </AdminNav>
@@ -54,22 +54,28 @@ export default {
     },
 
     props: {
-        categories: Object
+        category: Object
     },
 
     data() {
         return {
             form: useForm({
                 name: "",
-                image: null
+                image: null,
+                _method: 'put',
             })
         };
     },
 
+    mounted() {
+        this.form.name = this.category.name;
+    },
+
     methods: {
         submit() {
-            this.form.post(route('categories.store'), {
+            this.form.post(route('categories.update', this.category.id), this.form, {
                 preserveScroll: true,
+                forceFormData: true,
                 onSuccess: () => this.form.reset(),
                 onError: () => {
                     if (this.form.errors.name) {
