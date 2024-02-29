@@ -38,6 +38,11 @@ const showingNavigationDropdown = ref(false);
                                     Plans
                                 </NavLink>
                             </div>
+                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink :href="route('admin')" :active="route().current('admin')">
+                                    Admin
+                                </NavLink>
+                            </div>
                         </div>
 
                         <div class="hidden sm:flex sm:items-center sm:ms-6">

@@ -1,0 +1,87 @@
+<template>
+    <AdminNav>
+        <h2>Crear una Categorieas</h2>
+        <form @submit.prevent="submit">
+            <div class="space-y-6">
+                <div>
+                    <InputLabel for="name" value="Name" />
+
+                    <TextInput
+                        id="name"
+                        ref="nameInput"
+                        v-model="form.name"
+                        type="text"
+                        class="block w-full"
+                        autocomplete="name-input"
+                    />
+
+                    <InputError :message="form.errors.name" class="mt-2" />
+                </div>
+
+                <div>
+                    <input type="file" id="image" name="image"
+                        @input="form.image = $event.target.files[0]"/>
+                </div>
+
+                {{ form.image }}
+            </div>
+
+
+            <div class="mt-8">
+                <button type="submit">Create Company</button>
+            </div>
+        </form>
+    </AdminNav>
+</template>
+
+<script>
+
+import AdminNav from "../../Admin.vue"
+import { Link } from '@inertiajs/vue3';
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import TextInput from '@/Components/TextInput.vue';
+import { useForm } from '@inertiajs/vue3';
+
+export default {
+
+    components: {
+        AdminNav,
+        Link,
+        InputError,
+        InputLabel,
+        TextInput,
+    },
+
+    props: {
+        categories: Object
+    },
+
+    data() {
+        return {
+            form: useForm({
+                name: "",
+                image: null
+            })
+        };
+    },
+
+    methods: {
+        submit() {
+            this.form.post(route('categories.store'), {
+                preserveScroll: true,
+                onSuccess: () => this.form.reset(),
+                onError: () => {
+                    if (this.form.errors.name) {
+                        this.form.reset('name');
+                    }
+                    if (this.form.errors.logo) {
+                        this.form.reset('image');
+                    }
+                },
+            });
+        },
+    },
+}
+
+</script>

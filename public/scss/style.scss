@@ -6,7 +6,9 @@
 
 :root {
 
-    --second-color: #FF4B4B ;
+    --second-color: #FF4B4B;
+    --second-color-alt: #ff4b4b2c;
+    --second-color-light: #ff9c9c;
     --third-color: #5D9285;
     --fouth-color: #7074BF;
     --gray: #dedede;
@@ -433,4 +435,98 @@ footer {
 /* Media query para pantallas grandes (computadoras de escritorio, etc.) */
 @media only screen and (min-width: 1025px) {
     /* Estilos para pantallas grandes */
+}
+
+/* Admin bar */
+
+
+#admin-dashboard {
+    display: flex;
+    height: 91vh;
+}
+
+#admin-dashboard aside {
+    display: flex;
+    flex-direction: column;
+    width: calc(2rem + 32px);
+    height: 100%;
+    overflow: hidden;
+    padding: 1rem;
+    background-color: #212121;
+    color: aliceblue;
+    transition: 0.2s ease-out;
+
+    button {
+        text-align: center;
+    }
+
+    h3, .button .text {
+        opacity: 0;
+        transition: 0.3s ease-out;
+    }
+
+    h3 {
+        color: rgb(122, 122, 122);
+        text-transform: uppercase;
+        margin-top: 2rem
+    }
+
+    .menu {
+        margin: 0 -1rem;
+
+        .button {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 0.5rem 1.2rem;
+            transition: 0.2s ease-out;
+
+            .material-symbols-outlined {
+                font-size: 1.5rem;
+                transition: 0.2s ease-out;
+            }
+
+            .text {
+                color: #d1d1d1;
+                transition: 0.2s ease-out;
+            }
+
+            &:hover {
+                background-color: var(--second-color-alt);
+                border-right: 5px solid var(--second-color);
+
+                .material-symbols-outlined, .text {
+                    color: var(--second-color-light);
+                }
+            }
+
+        }
+    }
+
+    &.is-expanded {
+        width: 300px;
+
+        h3, .button .text {
+            opacity: 1;
+        }
+
+        button {
+            text-align: right;
+        }
+
+        .menu {
+            .material-symbols-outlined {
+                margin-right: 1rem;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        position: fixed;
+        z-index: 99;
+    }
+}
+
+.admin-content {
+    padding: 2rem;
 }
