@@ -19,7 +19,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/', function () {
+Route::get('/profile/view', function () {
     return Inertia::render('Profile/Show');
 })->name('show.profile');
 
