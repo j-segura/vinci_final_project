@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('description');
             $table->string('image');
-            $table->integer('likes');
+            $table->integer('likes')->defoult(0);
             $table->boolean('status')->default(true); // 1. public, 0. private
             $table->unsignedBigInteger('author_id');
 

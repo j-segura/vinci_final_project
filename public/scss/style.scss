@@ -6,10 +6,13 @@
 
 :root {
 
-    --second-color: #FF4B4B ;
+    --second-color: #FF4B4B;
+    --second-color-alt: #ff4b4b2c;
+    --second-color-light: #ff9c9c;
     --third-color: #5D9285;
     --fouth-color: #7074BF;
-    --gray: #dedede;
+    --gray: #DCDCDC;
+    --black: #1C1C1C;
 
 }
 
@@ -433,4 +436,158 @@ footer {
 /* Media query para pantallas grandes (computadoras de escritorio, etc.) */
 @media only screen and (min-width: 1025px) {
     /* Estilos para pantallas grandes */
+}
+
+/* Admin bar */
+
+
+#admin-dashboard {
+    display: flex;
+    height: 91vh;
+}
+
+#admin-dashboard aside {
+    display: flex;
+    flex-direction: column;
+    width: calc(2rem + 32px);
+    height: 100%;
+    overflow: hidden;
+    padding: 1rem;
+    background-color: #212121;
+    color: aliceblue;
+    transition: 0.2s ease-out;
+
+    button {
+        text-align: center;
+    }
+
+    h3, .button .text {
+        opacity: 0;
+        transition: 0.3s ease-out;
+    }
+
+    h3 {
+        color: rgb(122, 122, 122);
+        text-transform: uppercase;
+        margin-top: 2rem
+    }
+
+    .menu {
+        margin: 0 -1rem;
+
+        .button {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            padding: 0.5rem 1.2rem;
+            transition: 0.2s ease-out;
+
+            .material-symbols-outlined {
+                font-size: 1.5rem;
+                transition: 0.2s ease-out;
+            }
+
+            .text {
+                color: #d1d1d1;
+                transition: 0.2s ease-out;
+            }
+
+            &:hover {
+                background-color: var(--second-color-alt);
+                border-right: 5px solid var(--second-color);
+
+                .material-symbols-outlined, .text {
+                    color: var(--second-color-light);
+                }
+            }
+
+        }
+    }
+
+    &.is-expanded {
+        width: 300px;
+
+        h3, .button .text {
+            opacity: 1;
+        }
+
+        button {
+            text-align: right;
+        }
+
+        .menu {
+            .material-symbols-outlined {
+                margin-right: 1rem;
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        position: fixed;
+        z-index: 99;
+    }
+}
+
+.admin-content {
+    padding: 2rem;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.admin-header {
+
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dcdcdc;
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+
+    h2 {
+        font-size: 2rem;
+    }
+
+}
+
+.basic-succes-btn {
+    padding: 5px 15px !important;
+    background-color: var(--third-color) !important;
+    color: #fff !important;
+}
+
+.basic-gray-btn {
+    padding: 5px 15px !important;
+    background-color: #d7d7d7 !important;
+    color: #5e5e5e !important;
+}
+
+/* Paginator */
+
+.paginator {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.p-link {
+    background-color: #DCDCDC;
+    margin: 0 .3rem;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.num-p-link {
+
+    &:hover {
+        background: var(--second-color);
+        color: #fff;
+    }
+}
+
+.side-p-link {
+    background-color: var(--black);
+    color: #fff;
 }

@@ -20,25 +20,9 @@
             <p>Here you will find all the categories we have available</p>
         </div>
         <section id="categories">
-            <div>
-                <img src="./../img/digital.jpg" alt="category">
-                <span>Digital Art</span>
-            </div>
-            <div>
-                <img src="./../img/header-bg.jpg" alt="category">
-                <span>Trend</span>
-            </div>
-            <div>
-                <img src="./../img/3d.jpg" alt="category">
-                <span>Abstract</span>
-            </div>
-            <div>
-                <img src="./../img/scullture.jpg" alt="category">
-                <span>Sculptures</span>
-            </div>
-            <div>
-                <img src="./../img/old.jpg" alt="category">
-                <span>Contemporary</span>
+            <div v-for="category in categories">
+                <img :src="category.image" alt="category">
+                <span>{{ category.name }}</span>
             </div>
         </section>
         <div class="sub-title">
@@ -161,6 +145,10 @@ export default {
         AuthenticatedLayout,
         Head,
 
+    },
+
+    props: {
+        categories: Object,
     },
 
     data() {

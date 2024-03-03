@@ -18,11 +18,11 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password')->nullable();
             $table->string('google_id')->nullable();
-            $table->text('about');
-            $table->string('about_image');
-            $table->string('perfil_photo');
-            $table->integer('subscribers');
-            $table->double('subscription_price', 16, 5);
+            $table->text('about')->nullable();
+            $table->string('about_image')->nullable();
+            $table->string('perfil_photo')->nullable();
+            $table->integer('subscribers')->default(0);
+            $table->double('subscription_price', 16, 5)->nullable();;
             $table->rememberToken();
             $table->timestamps();
         });
