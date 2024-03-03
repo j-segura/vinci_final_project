@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\TagsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
@@ -17,6 +18,10 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+
+Route::get('/', function () {
+    return Inertia::render('Profile/Show');
+})->name('show.profile');
 
 Route::get('/google-auth/redirect', function () {
     return Socialite::driver('google')->redirect();
@@ -51,5 +56,7 @@ Route::get('/tags', [TagsController::class, 'index'])->middleware(['auth', 'veri
 
 /* Categories */
 Route::resource('admin/categories', CategoryController::class)->middleware(['auth', 'verified']);
+/* Subscription plan */
+Route::resource('admin/plans', PlanController::class)->middleware(['auth', 'verified']);
 
 require __DIR__.'/auth.php';

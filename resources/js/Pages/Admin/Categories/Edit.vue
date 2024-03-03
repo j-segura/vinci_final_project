@@ -1,6 +1,11 @@
 <template>
     <AdminNav>
-        <h2>Edit Category</h2>
+        <div class="admin-header">
+            <h2>Edit Category {{ category.name }}</h2>
+            <Link :href="route('categories.index')">
+                <button class="basic-gray-btn">Regresar</button>
+            </Link>
+        </div>
         <form @submit.prevent="submit">
             <div class="space-y-6">
                 <div>
@@ -28,7 +33,7 @@
 
 
             <div class="mt-8">
-                <button type="submit">Edit Company</button>
+                <button type="submit" class="basic-succes-btn">Edit Category</button>
             </div>
         </form>
     </AdminNav>

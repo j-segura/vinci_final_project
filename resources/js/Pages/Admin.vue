@@ -23,9 +23,9 @@
                         <span class="material-symbols-outlined">view_cozy</span>
                         <span class="text">Categories</span>
                     </Link>
-                    <Link :href="route('tags')" class="button" :active="route().current('tags')">
-                        <span class="material-symbols-outlined">group</span>
-                        <span class="text">Users</span>
+                    <Link :href="route('plans.index')" class="button" :active="route().current('plans.index')">
+                        <span class="material-symbols-outlined">request_quote</span>
+                        <span class="text">Plans</span>
                     </Link>
                 </div>
             </aside>

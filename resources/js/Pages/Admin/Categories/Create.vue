@@ -1,6 +1,11 @@
 <template>
     <AdminNav>
-        <h2>Create category</h2>
+        <div class="admin-header">
+            <h2>Create Category</h2>
+            <Link :href="route('categories.index')">
+                <button class="basic-gray-btn">Regresar</button>
+            </Link>
+        </div>
         <form @submit.prevent="submit">
             <div class="space-y-6">
                 <div>
@@ -23,12 +28,11 @@
                         @input="form.image = $event.target.files[0]"/>
                 </div>
 
-                {{ form.image }}
             </div>
 
 
-            <div class="mt-8">
-                <button type="submit">Create Company</button>
+            <div class="omt-8">
+                <button type="submit" class="basic-succes-btn">Create Category</button>
             </div>
         </form>
     </AdminNav>
@@ -75,7 +79,7 @@ export default {
                     if (this.form.errors.name) {
                         this.form.reset('name');
                     }
-                    if (this.form.errors.logo) {
+                    if (this.form.errors.image) {
                         this.form.reset('image');
                     }
                 },

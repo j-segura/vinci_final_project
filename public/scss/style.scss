@@ -11,7 +11,8 @@
     --second-color-light: #ff9c9c;
     --third-color: #5D9285;
     --fouth-color: #7074BF;
-    --gray: #dedede;
+    --gray: #DCDCDC;
+    --black: #1C1C1C;
 
 }
 
@@ -529,4 +530,64 @@ footer {
 
 .admin-content {
     padding: 2rem;
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.admin-header {
+
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #dcdcdc;
+    margin-bottom: 2rem;
+    padding: 1rem 0;
+
+    h2 {
+        font-size: 2rem;
+    }
+
+}
+
+.basic-succes-btn {
+    padding: 5px 15px !important;
+    background-color: var(--third-color) !important;
+    color: #fff !important;
+}
+
+.basic-gray-btn {
+    padding: 5px 15px !important;
+    background-color: #d7d7d7 !important;
+    color: #5e5e5e !important;
+}
+
+/* Paginator */
+
+.paginator {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.p-link {
+    background-color: #DCDCDC;
+    margin: 0 .3rem;
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+.num-p-link {
+
+    &:hover {
+        background: var(--second-color);
+        color: #fff;
+    }
+}
+
+.side-p-link {
+    background-color: var(--black);
+    color: #fff;
 }

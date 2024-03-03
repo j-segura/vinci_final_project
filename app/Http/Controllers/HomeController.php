@@ -12,6 +12,7 @@ class HomeController extends Controller
 
         $categories = Category::all();
 
+
         return Inertia::render('Dashboard', [
             'categories' => $categories
         ]);

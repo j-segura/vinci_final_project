@@ -1,10 +1,13 @@
 <template>
 
     <AdminNav>
-        <h2>Categorieas</h2>
-        <Link :href="route('categories.create')">
-            <button>Create Category</button>
-        </Link>
+        <div class="admin-header">
+            <h2>Categories</h2>
+            <Link :href="route('categories.create')">
+                <button class="basic-succes-btn">Create Category</button>
+            </Link>
+        </div>
+
         <table>
             <thead>
                 <th>id</th>
@@ -16,7 +19,7 @@
                 <tr v-for="category in categories.data">
                     <td>{{ category.id }}</td>
                     <td>{{ category.name }}</td>
-                    <td class="text-white px-4 py-2 text-center" >
+                    <td>
                         <div class="portrait">
                             <img v-if="category.image" :src="category.image" alt="category Logo" width="50px" height="50px" class="m-auto" />
                         </div>
@@ -30,6 +33,8 @@
                 </tr>
             </tbody>
         </table>
+
+        <Paginator :links="categories.links"/>
     </AdminNav>
 
 </template>
@@ -38,25 +43,36 @@
 
 import AdminNav from "../../Admin.vue"
 import { Link } from '@inertiajs/vue3';
+import Paginator from '@/Components/Paginator.vue';
+import { Inertia } from "@inertiajs/inertia"
 
 export default {
 
     components: {
         AdminNav,
         Link,
+        Paginator,
     },
 
     props: {
         categories: Object
     },
 
+    data() {
+        return {
+            search: '',
+        };
+    },
+
+    watch: {
+
+    },
+
     methods: {
         deleteCategory(category){
-            this.form.delete(route('categories.destroy', category.id), {
+            Inertia.delete(route('categories.destroy', category), {
                 preserveScroll: true,
-                onSuccess: () => {},
-                onError: () => {},
-                onFinish: () => {},
+                preserveState: true,
             });
         },
     },
