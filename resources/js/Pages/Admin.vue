@@ -15,7 +15,7 @@
 
                 <h3>Tables</h3>
                 <div class="menu">
-                    <Link :href="route('tags')" class="button" :active="route().current('tags')">
+                    <Link :href="route('tags.index')" class="button" :active="route().current('tags')">
                         <span class="material-symbols-outlined">sell</span>
                         <span class="text">Tags</span>
                     </Link>

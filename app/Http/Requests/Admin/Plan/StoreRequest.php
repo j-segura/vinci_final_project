@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Admin\Tag;
+namespace App\Http\Requests\Admin\Plan;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -23,6 +23,9 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => 'required',
+            'price' => 'required|numeric',
+            'frequency' => 'required|numeric',
+            'features' => 'required|array',
         ];
     }
 }

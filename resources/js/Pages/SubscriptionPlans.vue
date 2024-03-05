@@ -13,50 +13,21 @@
                 </div>
             </div>
             <div class="plans">
-                <div class="plan-card">
+                <div class="plan-card" v-for="plan in plans">
                     <div class="plan-header">
-                        <h3>FREE</h3>
-                        <p><span>$0/</span>month</p>
+                        <h3 class="third-color">{{ plan.name }}</h3>
+                        <p><span>${{ plan.price }}/</span>month</p>
                     </div>
                     <hr>
                     <div class="plan-characteristics">
-                        <div class="characteristy">
+                        <div class="characteristy" v-for="feature in JSON.parse(plan.features)">
                             <div class="check"></div>
-                            <p><span>Projects</span> quantity with the plan free your able to uplaod 5 projects</p>
-                        </div>
-                        <div class="characteristy">
-                            <div class="check"></div>
-                            <p><span>Projects</span> quantity with the plan free your able to uplaod 5 projects</p>
-                        </div>
-                        <div class="characteristy">
-                            <div class="check"></div>
-                            <p><span>Projects</span> quantity with the plan free your able to uplaod 5 projects</p>
+                            <p><span>{{ feature.name }}</span> {{ feature.description }}</p>
                         </div>
                     </div>
-                    <button class="boton-bg forth-bg">
+                    <!-- <button class="boton-bg forth-bg">
                         CURRENT PLAN
-                    </button>
-                </div>
-                <div class="plan-card">
-                    <div class="plan-header">
-                        <h3 class="third-color">PREMIUN</h3>
-                        <p><span>$4.99/</span>month</p>
-                    </div>
-                    <hr>
-                    <div class="plan-characteristics">
-                        <div class="characteristy">
-                            <div class="check"></div>
-                            <p><span>Projects</span> quantity with the plan free your able to uplaod 5 projects</p>
-                        </div>
-                        <div class="characteristy">
-                            <div class="check"></div>
-                            <p><span>Projects</span> quantity with the plan free your able to uplaod 5 projects</p>
-                        </div>
-                        <div class="characteristy">
-                            <div class="check"></div>
-                            <p><span>Projects</span> quantity with the plan free your able to uplaod 5 projects</p>
-                        </div>
-                    </div>
+                    </button> -->
                     <button class="boton-bg third-bg">
                         SUBSCRIBE
                     </button>
@@ -80,9 +51,14 @@ export default {
 
     },
 
+    props: {
+        plans: Object,
+    },
+
     data() {
 
         return {
+
 
         };
 

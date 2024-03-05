@@ -1,8 +1,8 @@
 <template>
     <AdminNav>
         <div class="admin-header">
-            <h2>Create Category</h2>
-            <Link :href="route('categories.index')">
+            <h2>Edit Tag {{ tag.name }}</h2>
+            <Link :href="route('tags.index')">
                 <button class="basic-gray-btn">Regresar</button>
             </Link>
         </div>
@@ -23,16 +23,11 @@
                     <InputError :message="form.errors.name" class="mt-2" />
                 </div>
 
-                <div>
-                    <input type="file" id="image" name="image"
-                        @input="form.image = $event.target.files[0]"/>
-                </div>
-
             </div>
 
 
-            <div class="omt-8">
-                <button type="submit" class="basic-succes-btn">Create Category</button>
+            <div class="mt-8">
+                <button type="submit" class="basic-succes-btn">Edit Tag</button>
             </div>
         </form>
     </AdminNav>
@@ -57,26 +52,32 @@ export default {
         TextInput,
     },
 
+    props: {
+        tag: Object
+    },
+
     data() {
         return {
             form: useForm({
                 name: "",
-                image: null
+                _method: 'put',
             })
         };
     },
 
+    mounted() {
+        this.form.name = this.tag.name;
+    },
+
     methods: {
         submit() {
-            this.form.post(route('categories.store'), {
+            this.form.put(route('tags.update', this.tag), this.form, {
                 preserveScroll: true,
+                forceFormData: true,
                 onSuccess: () => this.form.reset(),
                 onError: () => {
                     if (this.form.errors.name) {
                         this.form.reset('name');
-                    }
-                    if (this.form.errors.image) {
-                        this.form.reset('image');
                     }
                 },
             });

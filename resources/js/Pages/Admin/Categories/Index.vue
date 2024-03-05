@@ -41,10 +41,10 @@
 
 <script>
 
-import AdminNav from "../../Admin.vue"
+import AdminNav from "../../Admin.vue";
 import { Link } from '@inertiajs/vue3';
 import Paginator from '@/Components/Paginator.vue';
-import { Inertia } from "@inertiajs/inertia"
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
 

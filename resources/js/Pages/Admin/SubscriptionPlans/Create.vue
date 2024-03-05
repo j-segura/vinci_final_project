@@ -36,7 +36,6 @@
                             v-model="form.price"
                             type="text"
                             pattern="[0-9]*"
-                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             class="block w-full"
                             autocomplete="price-input"
                         />
@@ -54,7 +53,9 @@
                             id="frequency"
                             ref="frequencyInput"
                             v-model="form.frequency"
-                            type="number"
+                            type="text"
+                            pattern="[0-9]*"
+                            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                             class="block w-full"
                             autocomplete="frequency-input"
                         />
@@ -66,7 +67,61 @@
             </div>
 
             <div>
-                hola
+                <table>
+                    <thead>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                    </thead>
+                    <tbody>
+                        <tr v-for="detail, index in form.features">
+                            <td>{{ detail.name }}</td>
+                            <td>{{ detail.description }}</td>
+                            <td>
+                                <button @click.prevent="deleteFeature(index)">
+                                    <span class="material-symbols-outlined">
+                                        delete
+                                    </span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <div class="space-y-6">
+                        <div>
+                            <InputLabel for="detail_name" value="Name" />
+
+                            <TextInput
+                                id="detail_name"
+                                ref="detail_nameInput"
+                                v-model="detail.name"
+                                type="text"
+                                class="block w-full"
+                                autocomplete="detail_name-input"
+                            />
+
+                        </div>
+
+                    </div>
+                    <div class="space-y-6">
+                        <div>
+                            <InputLabel for="detail_description" value="Description" />
+
+                            <TextInput
+                                id="detail_description"
+                                ref="detail_descriptionInput"
+                                v-model="detail.description"
+                                type="text"
+                                class="block w-full"
+                                autocomplete="detail_description-input"
+                            />
+
+                        </div>
+
+                    </div>
+                    <button @click.prevent="addFeature(detail)" class="basic-succes-btn">Add feature</button>
+                </div>
             </div>
 
             <div class="omt-8">
@@ -95,18 +150,24 @@ export default {
         TextInput,
     },
 
-    props: {
-        categories: Object
-    },
-
     data() {
         return {
             form: useForm({
-                name: null,
-                price: null,
-                frequency: null,
-                features: [],
-            })
+                name: '',
+                price: '',
+                frequency: '',
+                features: [
+                    {
+                        name: 'rfasd',
+                        description: 'sdfasdf',
+                    }
+                ],
+            }),
+
+            detail: {
+                name: '',
+                description: '',
+            }
         };
     },
 
@@ -131,6 +192,18 @@ export default {
                 },
             });
         },
+
+        addFeature(detail) {
+            this.form.features.push(detail);
+            this.detail = {
+                name: '',
+                description: '',
+            }
+        },
+
+        deleteFeature(index) {
+            this.form.features.splice(index, 1);
+        }
     },
 }
 

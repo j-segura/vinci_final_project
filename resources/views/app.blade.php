@@ -10,6 +10,10 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
         <link rel="stylesheet" href="{{ asset('scss/style.scss') }}">
+        <link rel="stylesheet" href="{{ asset('css/vue-multiselect.css') }}">
+
+        {{-- @import "../../node_modules/vue-multiselect/dist/vue-multiselect.min.css"; --}}
+
         <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 
         <!-- Scripts -->

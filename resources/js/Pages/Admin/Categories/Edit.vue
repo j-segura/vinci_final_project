@@ -28,7 +28,6 @@
                         @input="form.image = $event.target.files[0]"/>
                 </div>
 
-                {{ form.image }}
             </div>
 
 
@@ -78,7 +77,7 @@ export default {
 
     methods: {
         submit() {
-            this.form.post(route('categories.update', this.category.id), this.form, {
+            this.form.put(route('categories.update', this.category), this.form, {
                 preserveScroll: true,
                 forceFormData: true,
                 onSuccess: () => this.form.reset(),

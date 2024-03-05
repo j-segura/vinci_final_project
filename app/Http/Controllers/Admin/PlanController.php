@@ -3,8 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Admin\Plan\StoreRequest;
 use App\Models\SubscriptionPlan;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 
 class PlanController extends Controller
@@ -14,8 +15,19 @@ class PlanController extends Controller
      */
     public function index()
     {
-        $plans = SubscriptionPlan::orderBy('created_at', 'desc')->paginate(20);
-        return Inertia::render('Admin/SubscriptionPlans/Index', compact('plans'));
+
+        try {
+
+            $plans = SubscriptionPlan::orderBy('created_at', 'desc')->paginate(20);
+            return Inertia::render('Admin/SubscriptionPlans/Index', compact('plans'));
+
+        } catch (\Exception $ex) {
+
+            $message = 'Error en el método' . __METHOD__ . ' / ' . $ex;
+            Log::error($message);
+            return false;
+
+        }
     }
 
     /**
@@ -29,40 +41,100 @@ class PlanController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        //
+
+        try {
+
+            $data = $request->validated();
+
+            $data['features'] = json_encode($data['features']);
+
+            SubscriptionPlan::create($data);
+
+            return redirect()->route('plans.index')->with('success', 'Plan created successfully.');
+
+        } catch (\Exception $ex) {
+
+            $message = 'Error en el método' . __METHOD__ . ' / ' . $ex;
+            Log::error($message);
+            return false;
+
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show()
     {
-        //
+
+        try {
+
+            $plans = SubscriptionPlan::all();
+
+            return Inertia::render('SubscriptionPlans', compact('plans'));
+
+        } catch (\Exception $ex) {
+
+            $message = 'Error en el método' . __METHOD__ . ' / ' . $ex;
+            Log::error($message);
+            return false;
+
+        }
+
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(SubscriptionPlan $plan)
     {
-        //
+        return Inertia::render('Admin/SubscriptionPlans/Edit', compact('plan'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreRequest $request, SubscriptionPlan $plan)
     {
-        //
+
+        try {
+
+            $data = $request->validated();
+
+            $data['features'] = json_encode((Object)$data['features']);
+
+            $plan->update($data);
+
+            return redirect()->route('plans.index')->with('success', 'Plan updated successfully.');
+
+
+        } catch (\Exception $ex) {
+
+            $message = 'Error en el método' . __METHOD__ . ' / ' . $ex;
+            Log::error($message);
+            return false;
+
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(SubscriptionPlan $plan)
     {
-        //
+        try {
+
+            $plan->delete();
+            return redirect()->route('plans.index')->with('success', 'Plans deleted successfully.');
+
+        } catch (\Exception $ex) {
+
+            $message = 'Error en el método' . __METHOD__ . ' / ' . $ex;
+            Log::error($message);
+            return false;
+
+        }
     }
 }
