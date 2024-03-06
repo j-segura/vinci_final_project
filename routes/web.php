@@ -20,7 +20,7 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/', function () {
+Route::get('/profile', function () {
     return Inertia::render('Profile/Show');
 })->name('show.profile');
 
@@ -56,6 +56,9 @@ Route::resource('admin/categories', CategoryController::class)->middleware(['aut
 /* Subscription plan */
 Route::resource('admin/plans', PlanController::class)->middleware(['auth', 'verified']);
 /* Projects */
-Route::get('/profile/create', [ProjectController::class, 'create'])->name('project.create');
+Route::get('/project/create', [ProjectController::class, 'create'])->name('project.create');
+
+Route::get('/profile/manager', [ProfileController::class, 'manager'])->name('profile.manager');
+
 
 require __DIR__.'/auth.php';

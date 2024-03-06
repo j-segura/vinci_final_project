@@ -21,6 +21,7 @@
     "dependencies": {
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/vue3": "^1.0.14",
+        "bootstrap": "^5.3.3",
         "vue-multiselect": "^3.0.0-alpha.2"
     }
 }

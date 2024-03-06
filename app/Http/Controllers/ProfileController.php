@@ -60,4 +60,11 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+    public function manager() {
+
+        return Inertia::render('Profile/Manager');
+
+    }
+
 }
