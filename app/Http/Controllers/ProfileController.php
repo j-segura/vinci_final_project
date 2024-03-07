@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Project;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -63,7 +64,11 @@ class ProfileController extends Controller
 
     public function manager() {
 
-        return Inertia::render('Profile/Manager');
+        $projects = Project::where('author_id', auth()->user()->id)->get();
+
+        return Inertia::render('Profile/Manager', [
+            'projects' => $projects,
+        ]);
 
     }
 

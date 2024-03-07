@@ -53,29 +53,77 @@
                     </Link>
                 </div>
                 <div class="projects-grid">
-                    <div class="card-p">
+                    <div class="card-p" v-for="project in projects">
                         <div class="actions">
                             <div class="show-btn">
                                 <span class="material-symbols-outlined">visibility</span>
                             </div>
-                            <div class="edit-btn">
+                            <Link :href="route('project.edit', project)" class="edit-btn">
                                 <span class="material-symbols-outlined">edit</span>
-                            </div>
+                            </Link>
                             <div class="delete-btn">
                                 <span class="material-symbols-outlined">delete</span>
                             </div>
                         </div>
-                        <img src="./../../img/header-bg.jpg" alt="">
+                        <img :src="project.image" alt="">
                     </div>
                 </div>
             </section>
-            <hr>    
+            <hr>
             <section class="references">
                 <div class="head">
                     <h3>References</h3>
                     <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas.</p>
                 </div>
                 <div class="references-grid">
+                    <div class="card-ref">
+                        <div class="card-ref-head">
+                            <div class="user-data">
+                                <div class="user-photo-o">
+                                    <img src="./../../img/scullture.jpg" alt="">
+                                </div>
+                                <span>Susan Bill</span>
+                            </div>
+                            <div class="trash-top-btn">
+                                <span class="material-symbols-outlined">delete</span>
+                            </div>
+                        </div>
+                        <p>
+                            Lorem Ipsum es simplemente el texto de relleno de las imprentas. este man le mete muy rico sabe trabajar el arte como se debe bla bla bla
+                        </p>
+                    </div>
+                    <div class="card-ref">
+                        <div class="card-ref-head">
+                            <div class="user-data">
+                                <div class="user-photo-o">
+                                    <img src="./../../img/scullture.jpg" alt="">
+                                </div>
+                                <span>Susan Bill</span>
+                            </div>
+                            <div class="trash-top-btn">
+                                <span class="material-symbols-outlined">delete</span>
+                            </div>
+                        </div>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam molestias perfe
+                        </p>
+                    </div>
+                    <div class="card-ref">
+                        <div class="card-ref-head">
+                            <div class="user-data">
+                                <div class="user-photo-o">
+                                    <img src="./../../img/scullture.jpg" alt="">
+                                </div>
+                                <span>Joe Miller</span>
+                            </div>
+                            <div class="trash-top-btn">
+                                <span class="material-symbols-outlined">delete</span>
+                            </div>
+                        </div>
+                        <p>
+                            Que! chimba! de projectos WAAAAAA!!
+                        </p>
+                    </div>
                     <div class="card-ref">
                         <div class="card-ref-head">
                             <div class="user-data">
@@ -121,6 +169,12 @@ export default {
         Link,
 
     },
+
+    props: {
+
+        projects: Object
+
+    }
 
 }
 

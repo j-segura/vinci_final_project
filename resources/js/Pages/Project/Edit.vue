@@ -3,7 +3,7 @@
 
     <AuthenticatedLayout>
         <div class="project-view">
-            <h2>+ Add a new project to the portfolio</h2>
+            <h2>+ Update a new project to the portfolio</h2>
             <form @submit.prevent="submit">
                 <div class="grid-2">
                     <div class="space-y-6 col-12 col-md-6">
@@ -40,16 +40,16 @@
                 <label for="description">Description *</label>
                 <textarea name="description" v-model="form.description" cols="30" rows="10" placeholder="Write a  interesting description..."></textarea>
                 <div class="my-4 mt-6">
-                    <label for="image" class="basic-fouth-btn ">Upload an image</label>
+                    <label for="image" class="basic-fouth-btn ">Upload an new image</label>
                     <input type="file" id="image" name="image" hidden
                         @input="form.image = $event.target.files[0]"/>
                 </div>
                 {{ form.image }}
-                <!-- <div class="project-image-view">
-                    <img src="./../../img/main.jpg" alt="">
-                </div> -->
+                <div class="project-image-view">
+                    <img :src="project.image" alt="">
+                </div>
                 <div class="omt-8">
-                    <button type="submit" class="basic-succes-btn">Add Project</button>
+                    <button type="submit" class="basic-succes-btn">Update Project</button>
                 </div>
             </form>
 
@@ -81,7 +81,14 @@ export default {
     },
 
     props: {
+        project: Object,
         tags: Object,
+    },
+
+    mounted() {
+        this.form.name = this.project.title;
+        this.form.description = this.project.description;
+        this.form.tags = this.project.tags;
     },
 
     data () {
@@ -92,6 +99,7 @@ export default {
                 tags: [],
                 description: '',
                 image: '',
+                _method: 'put',
             })
         }
     },
@@ -107,8 +115,9 @@ export default {
         },
 
         submit() {
-            this.form.post(route('project.store'), {
+            this.form.put(route('project.update', this.project), this.form, {
                 preserveScroll: true,
+                forceFormData: true,
                 onSuccess: () => this.form.reset(),
                 onError: () => {
                     if (this.form.errors.name) {

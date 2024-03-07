@@ -30,98 +30,14 @@
             <p class="text-center">Looking for a good artist? find him below</p>
         </div>
         <section id="works-index">
-            <div class="work-card">
+            <div class="work-card" v-for="project in projects.data">
                 <div class="user-info">
                     <div class="user-picture"></div>
                     <span>Daniel Murth | Artist</span>
                 </div>
                 <div class="work">
                     <div class="img">
-                        <img src="./../img/old.jpg" alt="">
-                    </div>
-                    <div class="work-info">
-                        29 likes
-                    </div>
-                </div>
-            </div>
-            <div class="work-card">
-                <div class="user-info">
-                    <div class="user-picture"></div>
-                    <span>Daniel Murth | Artist</span>
-                </div>
-                <div class="work">
-                    <div class="img">
-                        <img src="" alt="">
-                    </div>
-                    <div class="work-info">
-                        29 likes
-                    </div>
-                </div>
-            </div>
-            <div class="work-card">
-                <div class="user-info">
-                    <div class="user-picture"></div>
-                    <span>Daniel Murth | Artist</span>
-                </div>
-                <div class="work">
-                    <div class="img">
-                        <img src="" alt="">
-                    </div>
-                    <div class="work-info">
-                        29 likes
-                    </div>
-                </div>
-            </div>
-            <div class="work-card">
-                <div class="user-info">
-                    <div class="user-picture"></div>
-                    <span>Daniel Murth | Artist</span>
-                </div>
-                <div class="work">
-                    <div class="img">
-                        <img src="" alt="">
-                    </div>
-                    <div class="work-info">
-                        29 likes
-                    </div>
-                </div>
-            </div>
-            <div class="work-card">
-                <div class="user-info">
-                    <div class="user-picture"></div>
-                    <span>Daniel Murth | Artist</span>
-                </div>
-                <div class="work">
-                    <div class="img">
-                        <img src="" alt="">
-                    </div>
-                    <div class="work-info">
-                        29 likes
-                    </div>
-                </div>
-            </div>
-            <div class="work-card">
-                <div class="user-info">
-                    <div class="user-picture"></div>
-                    <span>Daniel Murth | Artist</span>
-                </div>
-                <div class="work">
-                    <div class="img">
-                        <img src="" alt="">
-                    </div>
-                    <div class="work-info">
-                        29 likes
-                    </div>
-                </div>
-            </div>
-            <div class="work-card">
-                <div class="user-info">
-                    <div class="user-picture"></div>
-                    <span>Daniel Murth | Artist</span>
-                </div>
-                <div class="work">
-                    <div class="img">
-                        <img src="./../img/header-bg.jpg" alt="">
+                        <img :src="project.image" alt="">
                     </div>
                     <div class="work-info">
                         29 likes
@@ -129,6 +45,7 @@
                 </div>
             </div>
         </section>
+        <Paginator :links="projects.links" class="margin-b"/>
         <footer></footer>
     </AuthenticatedLayout>
 </template>
@@ -137,6 +54,7 @@
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
+import Paginator from '@/Components/Paginator.vue';
 
 export default {
 
@@ -144,11 +62,13 @@ export default {
 
         AuthenticatedLayout,
         Head,
+        Paginator,
 
     },
 
     props: {
         categories: Object,
+        projects: Object,
     },
 
     data() {
@@ -162,3 +82,11 @@ export default {
 }
 
 </script>
+
+<style>
+
+.margin-b {
+    margin-bottom: 5rem;
+}
+
+</style>

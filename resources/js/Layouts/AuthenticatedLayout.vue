@@ -43,16 +43,6 @@ const showingNavigationDropdown = ref(false);
                                     Admin
                                 </NavLink>
                             </div>
-                            <!-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('show.profile')" :active="route().current('show.profile')">
-                                    Profile
-                                </NavLink>
-                            </div> -->
-                            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink :href="route('project.create')" :active="route().current('project.create')">
-                                    Create Project
-                                </NavLink>
-                            </div>
                             <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink :href="route('profile.manager')" :active="route().current('profile.manager')">
                                     Profile Manager
