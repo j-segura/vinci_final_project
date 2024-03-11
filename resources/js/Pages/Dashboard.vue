@@ -33,15 +33,13 @@
             <div class="work-card" v-for="project in projects.data">
                 <div class="user-info">
                     <div class="user-picture"></div>
-                    <span>Daniel Murth | Artist</span>
+                    <span>{{ project.author.name }} | Artist</span>
                 </div>
                 <div class="work">
-                    <div class="img">
-                        <img :src="project.image" alt="">
-                    </div>
-                    <div class="work-info">
-                        29 likes
-                    </div>
+                    <Link class="img" :href="route('project.show', project)">
+                        <img :src="project.image" :alt="project.title">
+                    </Link>
+                    <span>{{ project.title }}</span>
                 </div>
             </div>
         </section>
@@ -55,6 +53,7 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import Paginator from '@/Components/Paginator.vue';
+import { Link } from '@inertiajs/vue3';
 
 export default {
 
@@ -63,6 +62,7 @@ export default {
         AuthenticatedLayout,
         Head,
         Paginator,
+        Link,
 
     },
 

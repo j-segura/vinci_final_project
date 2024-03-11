@@ -52,12 +52,12 @@
                         <button class="basic-succes-btn">Add Project +</button>
                     </Link>
                 </div>
-                <div class="projects-grid">
+                <div class="projects-grid mt-2" v-if="projects.length > 0">
                     <div class="card-p" v-for="project in projects">
                         <div class="actions">
-                            <div class="show-btn">
+                            <Link class="show-btn" :href="route('project.show', project)">
                                 <span class="material-symbols-outlined">visibility</span>
-                            </div>
+                            </Link>
                             <Link :href="route('project.edit', project)" class="edit-btn">
                                 <span class="material-symbols-outlined">edit</span>
                             </Link>
@@ -67,6 +67,9 @@
                         </div>
                         <img :src="project.image" alt="">
                     </div>
+                </div>
+                <div class="no-content" v-else>
+                    No projects yet
                 </div>
             </section>
             <hr>
@@ -146,7 +149,7 @@
                         <img src="./../../img/scullture.jpg" alt="">
                     </div>
                     <textarea name="reference" id="reference" placeholder="Give a reference about Daniel:" cols="30" rows="10"></textarea>
-                    <button class="basic-succes-btn">Add Project +</button>
+                    <button class="basic-succes-btn">Comment</button>
                 </div>
             </section>
         </div>

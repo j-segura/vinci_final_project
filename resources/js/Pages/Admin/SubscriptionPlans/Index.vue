@@ -22,7 +22,10 @@
                     <td>{{ plan.id }}</td>
                     <td>{{ plan.name }}</td>
                     <td>{{ plan.price }}</td>
-                    <td>{{ plan.features }}</td>
+                    <td>{{ plan.frequency }}</td>
+                    <td>
+                        {{ plan.features }}
+                    </td>
                     <td>
                         <Link :href="route('plans.edit', plan)">
                             <button>Edit</button>

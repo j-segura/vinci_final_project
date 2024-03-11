@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\PlanController;
 use App\Http\Controllers\Admin\TagsController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProjectController;
@@ -56,8 +57,11 @@ Route::get('/project/create', [ProjectController::class, 'create'])->name('proje
 Route::post('/project', [ProjectController::class, 'store'])->name('project.store');
 Route::get('/project/{project}/edit', [ProjectController::class, 'edit'])->name('project.edit');
 Route::put('/project/{project}', [ProjectController::class, 'update'])->name('project.update');
+Route::get('/project/{project}', [ProjectController::class, 'show'])->name('project.show');
 
 Route::get('/profile/manager', [ProfileController::class, 'manager'])->name('profile.manager');
+
+Route::post('/project/comment/{project}', [CommentController::class, 'store'])->name('comments.store');
 
 
 require __DIR__.'/auth.php';

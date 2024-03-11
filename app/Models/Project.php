@@ -23,4 +23,14 @@ class Project extends Model
         return $this->belongsToMany('App\Models\Tag', 'projects_tags');
     }
 
+    public function author() {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Models\Comment');
+    }
+
+
 }

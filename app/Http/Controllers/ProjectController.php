@@ -87,9 +87,29 @@ class ProjectController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Project $project)
     {
-        //
+        try {
+
+            $project = Project::with('tags:id,name', 'author:id,name', 'comments.author:id,name,perfil_photo')->where('id', $project->id)->first();
+
+            $moreProjects = Project::where('author_id', $project->author_id)->take(4)->get();
+
+            $authUser = auth()->user()->id;
+
+            return Inertia::render('Project/Show', [
+                'project' => $project,
+                'moreProjects' => $moreProjects,
+                'authUser' => $authUser,
+            ]);
+
+        } catch (\Exception $ex) {
+
+            $message = 'Error en el método' . __METHOD__ . ' / ' . $ex;
+            Log::error($message);
+            return false;
+
+        }
     }
 
     /**
