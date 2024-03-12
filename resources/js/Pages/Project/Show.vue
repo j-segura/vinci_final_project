@@ -42,7 +42,11 @@
                                         </div>
                                         <span>{{ comment.author.name }}</span>
                                     </div>
-                                    <span class="material-symbols-outlined delete" v-if="comment.author_id === authUser">delete</span>
+                                    <span class="material-symbols-outlined delete"
+                                        v-if="comment.author_id === authUser"
+                                        @click="deleteComment(category)">
+                                        delete
+                                    </span>
                                 </div>
                                 <p>{{ comment.content }}</p>
                             </div>
@@ -100,6 +104,7 @@ export default {
     },
 
     methods: {
+
         addComment() {
             this.form.post(route('comments.store', this.project), {
                 preserveScroll: true,
@@ -111,6 +116,14 @@ export default {
                 },
             });
         },
+
+        deleteComment(category){
+            Inertia.delete(route('categories.destroy', category), {
+                preserveScroll: true,
+                preserveState: true,
+            });
+        },
+
     },
 
 }

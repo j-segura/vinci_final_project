@@ -60,6 +60,7 @@ Route::put('/project/{project}', [ProjectController::class, 'update'])->name('pr
 Route::get('/project/{project}', [ProjectController::class, 'show'])->name('project.show');
 
 Route::get('/profile/manager', [ProfileController::class, 'manager'])->name('profile.manager');
+Route::get('/profile/show', [ProfileController::class, 'manager'])->name('profile.show');
 
 Route::post('/project/comment/{project}', [CommentController::class, 'store'])->name('comments.store');
 
