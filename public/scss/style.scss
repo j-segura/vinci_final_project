@@ -648,7 +648,7 @@ footer {
 .edit-top-btn {
     width: 45px;
     height: 45px;
-    background-color: var(--second-color);
+    background-color: var(--fouth-color);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -699,9 +699,13 @@ footer {
         .profile-photo {
             width: 250px;
             height: 250px;
-            background-color: rgb(207, 207, 207);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4rem;
+            background-color: rgb(228, 228, 228);
+            color: #818181;
             position: relative;
-
         }
 
         .content {
@@ -787,6 +791,12 @@ footer {
             position: relative;
             height: 400px;
             width: 40%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4rem;
+            background-color: rgb(228, 228, 228);
+            color: #818181;
         }
 
         .about-form {
@@ -821,6 +831,37 @@ footer {
                 margin-bottom: 2rem;
             }
 
+        }
+
+    }
+
+    .about-show {
+
+        width: 100%;
+        background: var(--black);
+        color: #fff;
+        display: grid;
+        min-height: 500px;
+        grid-template-columns: 2fr 1fr;
+
+        .about-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 3rem;
+
+            h3 {
+                font-size: 2.5rem;
+                color: #92BDFF;
+            }
+
+            p {
+                font-size: 1.3rem;
+                color: #cfcdcd;
+                line-height: 2rem;
+                letter-spacing: 1px;
+                margin-top: 2rem
+            }
         }
 
     }
@@ -1317,3 +1358,10 @@ tbody tr:hover {
 
 }
 
+.update-profile-btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}

@@ -11,15 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('social_media', function (Blueprint $table) {
+        Schema::create('social_medias', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('url');
             $table->string('icon');
-            $table->unsignedBigInteger('user_id');
-
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-
             $table->timestamps();
         });
     }

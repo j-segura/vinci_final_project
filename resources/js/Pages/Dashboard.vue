@@ -32,7 +32,10 @@
         <section id="works-index">
             <div class="work-card" v-for="project in projects.data">
                 <div class="user-info">
-                    <div class="user-picture"></div>
+                    <div class="user-picture">
+                        <img :src="project.author.perfil_photo" alt="" v-if="project.author.perfil_photo">
+                        <img src="../img/user.png" alt="" v-else>
+                    </div>
                     <span>{{ project.author.name }} | Artist</span>
                 </div>
                 <div class="work">

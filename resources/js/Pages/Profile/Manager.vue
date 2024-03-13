@@ -3,45 +3,62 @@
 
     <AuthenticatedLayout>
         <div class="profile-manager">
-            <header>
-                <div class="profile-photo">
-                    <div class="edit-top-btn">
-                        <span class="material-symbols-outlined">edit</span>
+            <form @submit.prevent="submit">
+                <header>
+                    {{ localType }}
+                    <div class="profile-photo">
+                        <label for="photo" class="edit-top-btn" v-if="localType == 'M'"><span class="material-symbols-outlined">edit</span></label>
+                        <input type="file" id="photo" name="photo" hidden
+                            @input="form.perfil_photo = $event.target.files[0]"/>
+                        <img :src="user.perfil_photo" :alt="user.name" v-if="user.perfil_photo">
+                        <img src="../../img/user.png" :alt="user.name" v-else>
                     </div>
-                    <img src="./../../img/old.jpg" alt="">
-                </div>
-                <div class="content">
-                    <div>
-                        <h3>Daniel Murth</h3>
-                        <p>Projects 25 + | Artist | Exp 8</p>
-                    </div>
-                    <div class="user-social-medias">
-                        <a href="www.google.com" target="_black" class="social-media">
-                            <img src="./../../img/3d.jpg" alt="">
-                        </a>
-                        <div class="add">
-                            <span class="material-symbols-outlined">add</span>
+                    <div class="content">
+                        <div>
+                            <h3>{{ user.name }}</h3>
+                            <p>Projects {{ projectsCount }} | subscribers {{ user.subscribers }}</p>
+                        </div>
+                        <div class="user-social-medias">
+                            <a href="www.google.com" target="_black" class="social-media">
+                                <img src="./../../img/3d.jpg" alt="">
+                            </a>
+                            <div class="add" v-if="localType == 'M'">
+                                <span class="material-symbols-outlined">add</span>
+                            </div>
+                        </div>
+                        <div class="my-4 mt-6">
+                            <label for="curriculum" class="basic-black-btn">Add | update a curriculum</label>
+                            <input type="file" id="curriculum" name="curriculum" hidden
+                                @input="form.curriculum = $event.target.files[0]"/>
                         </div>
                     </div>
-                    <div class="my-4 mt-6">
-                        <label for="photo" class="basic-black-btn">Add | update a curriculum</label>
-                        <input type="file" id="photo" name="photo" hidden
-                            @input="form.image = $event.target.files[0]"/>
+                </header>
+                <hr>
+                <section class="about">
+                    <div class="about-form">
+                        <h3>About me</h3>
+                        <textarea name="about" v-model="form.about" id="about" cols="30" rows="10" placeholder="Write a litle "></textarea>
                     </div>
+                    <div class="about-image">
+                        <label for="about_image" class="edit-top-btn" v-if="localType == 'M'"><span class="material-symbols-outlined">edit</span></label>
+                        <input type="file" id="about_image" name="about_image" hidden
+                            @input="form.about_image = $event.target.files[0]"/>
+                        <img :src="user.about_image" v-if="user.about_image">
+                        <span v-else>With out image 😔</span>
+                    </div>
+                </section>
+                <div class="update-profile-btn">
+                    <button type="submit" class="basic-fouth-btn">Update Profile</button>
                 </div>
-            </header>
-            <hr>
-            <section class="about">
-                <div class="about-form">
+            </form>
+            <section class="about-show">
+                <div class="about-info">
                     <h3>About me</h3>
-                    <textarea name="about" id="about" cols="30" rows="10" placeholder="Write a litle "></textarea>
-                    <button class="basic-black-btn fit-content">Add | update</button>
+                    <p>{{ user.about }}</p>
                 </div>
                 <div class="about-image">
-                    <div class="edit-top-btn">
-                        <span class="material-symbols-outlined">edit</span>
-                    </div>
-                    <img src="./../../img/old.jpg" alt="">
+                    <img :src="user.about_image" v-if="user.about_image">
+                    <span v-else>With out image 😔</span>
                 </div>
             </section>
             <hr>
@@ -156,7 +173,7 @@
     </AuthenticatedLayout>
 </template>
 
-<script>
+ <script>
 
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
@@ -173,12 +190,56 @@ export default {
 
     },
 
+
     props: {
 
-        projects: Object
+        user: Object,
+        projects: Object,
+        projectsCount: Number,
+        localType: String,
 
-    }
+    },
 
+    data () {
+        return {
+
+            form: useForm({
+                perfil_photo: null,
+                curriculum: null,
+                about: '',
+                about_image: null,
+                _method: 'put',
+            })
+        }
+    },
+
+    mounted() {
+        this.form.about = this.user.about;
+    },
+
+    methods: {
+        submit() {
+            this.form.post(route('profile.manager.update'), this.form, {
+                preserveScroll: true,
+                forceFormData: true,
+                onSuccess: () => this.form.reset(),
+                onError: () => {
+                    if (this.form.errors.perfil_photo) {
+                        this.form.reset('perfil_photo');
+                    }
+                    if (this.form.errors.curriculum) {
+                        this.form.reset('curriculum');
+                    }
+                    if (this.form.errors.about) {
+                        this.form.reset('about');
+                    }
+                    if (this.form.errors.about_image) {
+                        this.form.reset('about_image');
+                    }
+                },
+            });
+        },
+    },
 }
 
 </script>

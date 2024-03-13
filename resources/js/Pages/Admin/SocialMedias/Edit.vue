@@ -1,8 +1,8 @@
 <template>
     <AdminNav>
         <div class="admin-header">
-            <h2>Edit Category {{ category.name }}</h2>
-            <Link :href="route('categories.index')">
+            <h2>Edit {{ socialMedia.name }}</h2>
+            <Link :href="route('social-medias.index')">
                 <button class="basic-gray-btn">Regresar</button>
             </Link>
         </div>
@@ -24,15 +24,15 @@
                 </div>
 
                 <div>
-                    <input type="file" id="image" name="image"
-                        @input="form.image = $event.target.files[0]"/>
+                    <input type="file" id="icon" name="icon"
+                        @input="form.icon = $event.target.files[0]"/>
                 </div>
 
             </div>
 
 
             <div class="mt-8">
-                <button type="submit" class="basic-succes-btn">Edit Category</button>
+                <button type="submit" class="basic-succes-btn">Edit Social Media</button>
             </div>
         </form>
     </AdminNav>
@@ -58,26 +58,26 @@ export default {
     },
 
     props: {
-        category: Object
+        socialMedia: Object
     },
 
     data() {
         return {
             form: useForm({
                 name: "",
-                image: null,
+                icon: null,
                 _method: 'put',
             })
         };
     },
 
     mounted() {
-        this.form.name = this.category.name;
+        this.form.name = this.socialMedia.name;
     },
 
     methods: {
         submit() {
-            this.form.post(route('categories.update', this.category), this.form, {
+            this.form.put(route('social-medias.update', this.socialMedia), this.form, {
                 preserveScroll: true,
                 forceFormData: true,
                 onSuccess: () => this.form.reset(),
@@ -85,8 +85,8 @@ export default {
                     if (this.form.errors.name) {
                         this.form.reset('name');
                     }
-                    if (this.form.errors.image) {
-                        this.form.reset('image');
+                    if (this.form.errors.icon) {
+                        this.form.reset('icon');
                     }
                 },
             });

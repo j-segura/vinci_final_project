@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\UpdateProfileManagerRequest;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -65,10 +69,104 @@ class ProfileController extends Controller
     public function manager() {
 
         $projects = Project::where('author_id', auth()->user()->id)->get();
+        $projectsCount = count($projects);
+        $user = auth()->user();
 
         return Inertia::render('Profile/Manager', [
             'projects' => $projects,
+            'user' => $user,
+            'projectsCount' => $projectsCount,
+            'localType' => 'M',
         ]);
+
+    }
+
+    public function show() {
+
+        $projects = Project::where('author_id', auth()->user()->id)->get();
+        $projectsCount = count($projects);
+        $user = auth()->user();
+
+        return Inertia::render('Profile/Manager', [
+            'projects' => $projects,
+            'user' => $user,
+            'projectsCount' => $projectsCount,
+            'localType' => 'S',
+        ]);
+
+    }
+
+    public function updateManager(UpdateProfileManagerRequest $request)
+    {
+        try {
+
+            $data = $request->validated();
+
+            $user = User::find(auth()->user()->id);
+
+            // validamos si ya existe un curriculum de lo contrario la actualiza
+            if ($request->hasFile('curriculum')) {
+
+                if ($user->curriculum) {
+                    Storage::delete($user->curriculum);
+                }
+
+                $curriculumPath = $request->file('curriculum')->store('curriculum', 'public');
+                $data['curriculum'] = asset('storage/' . $curriculumPath);
+
+            } else {
+
+                $data['curriculum'] = $user->curriculum;
+
+            }
+
+            // validamos si ya existe una foto de perfil de lo contrario la actualiza
+            if ($request->hasFile('perfil_photo')) {
+
+                if ($user->perfil_photo) {
+                    Storage::delete($user->perfil_photo);
+                }
+                $perfilPhotoPath = $request->file('perfil_photo')->store('profilePhotos', 'public');
+                $data['perfil_photo'] = asset('storage/' . $perfilPhotoPath);
+
+            } else {
+
+                $data['perfil_photo'] = $user->perfil_photo;
+
+            }
+
+            // validamos si ya existe una foto de perfil de lo contrario la actualiza
+            if ($request->hasFile('about_image')) {
+
+                if ($user->about_image) {
+                    Storage::delete($user->about_image);
+                }
+
+                $aboutImagePath = $request->file('about_image')->store('aboutUserImage', 'public');
+                $data['about_image'] = asset('storage/' . $aboutImagePath);
+
+            } else {
+
+                $data['about_image'] = $user->about_image;
+
+            }
+
+            $user->about = isset($data['about']) ? $data['about'] : $user->about;
+            $user->about_image = $data['about_image'];
+            $user->curriculum = $data['curriculum'];
+            $user->perfil_photo = $data['perfil_photo'];
+
+            $user->update();
+
+            return redirect()->route('profile.manager')->with('success', 'Profile updated successfully.');
+
+        } catch (\Exception $ex) {
+
+            $message = 'Error en el método' . __METHOD__ . ' / ' . $ex;
+            Log::error($message);
+            return false;
+
+        }
 
     }
 

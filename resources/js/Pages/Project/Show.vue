@@ -38,13 +38,14 @@
                                 <div class="coment-header" >
                                     <div class="user-data">
                                         <div class="user-photo-o">
-                                            <img :src="comment.author.perfil_photo" alt="">
+                                            <img :src="comment.author.perfil_photo" v-if="comment.author.perfil_photo">
+                                            <img src="../../img/user.png" v-else>
                                         </div>
                                         <span>{{ comment.author.name }}</span>
                                     </div>
                                     <span class="material-symbols-outlined delete"
                                         v-if="comment.author_id === authUser"
-                                        @click="deleteComment(category)">
+                                        @click="deleteComment(comment)">
                                         delete
                                     </span>
                                 </div>
@@ -78,6 +79,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 import { useForm } from '@inertiajs/vue3';
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
 
@@ -117,8 +119,8 @@ export default {
             });
         },
 
-        deleteComment(category){
-            Inertia.delete(route('categories.destroy', category), {
+        deleteComment(comment){
+            Inertia.delete(route('comments.delete', comment), {
                 preserveScroll: true,
                 preserveState: true,
             });

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('google_id')->nullable();
             $table->text('about')->nullable();
             $table->string('about_image')->nullable();
+            $table->string('curriculum')->nullable();
             $table->string('perfil_photo')->nullable();
             $table->integer('subscribers')->default(0);
             $table->double('subscription_price', 16, 5)->nullable();;

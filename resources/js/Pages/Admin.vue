@@ -27,6 +27,10 @@
                         <span class="material-symbols-outlined">request_quote</span>
                         <span class="text">Plans</span>
                     </Link>
+                    <Link :href="route('social-medias.index')" class="button" :active="route().current('social-medias.index')">
+                        <span class="material-symbols-outlined">groups</span>
+                        <span class="text">Social Medias</span>
+                    </Link>
                 </div>
             </aside>
             <div class="admin-content">

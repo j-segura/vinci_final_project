@@ -23,7 +23,24 @@ class CommentController extends Controller
 
             $comment->save();
 
-            return redirect()->route('pro.index')->with('success', 'Comment created successfully.');
+            return redirect()->route('project.show', $project)->with('success', 'Comment created successfully.');
+
+        } catch (\Exception $ex) {
+
+            $message = 'Error en el método' . __METHOD__ . ' / ' . $ex;
+            Log::error($message);
+            return false;
+
+        }
+
+    }
+
+    public function destroy(Comment $comment)
+    {
+
+        try {
+
+            $comment->delete();
 
         } catch (\Exception $ex) {
 
