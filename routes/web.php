@@ -64,7 +64,8 @@ Route::put('/project/{project}', [ProjectController::class, 'update'])->name('pr
 Route::get('/project/{project}', [ProjectController::class, 'show'])->name('project.show');
 
 Route::get('/profile/manager', [ProfileController::class, 'manager'])->name('profile.manager');
-Route::get('/profile/show', [ProfileController::class, 'show'])->name('profile.show');
+Route::get('/profile/show/{user}', [ProfileController::class, 'show'])->name('profile.show');
+Route::post('/profile/reference/{user}', [ProfileController::class, 'referenceStore'])->name('reference.store');
 
 Route::post('/project/comment/{project}', [CommentController::class, 'store'])->name('comments.store');
 Route::delete('/project/comment/{comment}', [CommentController::class, 'destroy'])->name('comments.delete');

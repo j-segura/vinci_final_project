@@ -31,13 +31,13 @@
         </div>
         <section id="works-index">
             <div class="work-card" v-for="project in projects.data">
-                <div class="user-info">
+                <Link class="user-info" :href="route('profile.show', project.author)">
                     <div class="user-picture">
                         <img :src="project.author.perfil_photo" alt="" v-if="project.author.perfil_photo">
                         <img src="../img/user.png" alt="" v-else>
                     </div>
                     <span>{{ project.author.name }} | Artist</span>
-                </div>
+                </Link>
                 <div class="work">
                     <Link class="img" :href="route('project.show', project)">
                         <img :src="project.image" :alt="project.title">

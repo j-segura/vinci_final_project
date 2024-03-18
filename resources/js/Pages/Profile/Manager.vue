@@ -5,7 +5,6 @@
         <div class="profile-manager">
             <form @submit.prevent="submit">
                 <header>
-                    {{ localType }}
                     <div class="profile-photo">
                         <label for="photo" class="edit-top-btn" v-if="localType == 'M'"><span class="material-symbols-outlined">edit</span></label>
                         <input type="file" id="photo" name="photo" hidden
@@ -26,15 +25,23 @@
                                 <span class="material-symbols-outlined">add</span>
                             </div>
                         </div>
-                        <div class="my-4 mt-6">
+                        <div class="my-4 mt-6" v-if="localType == 'M'">
                             <label for="curriculum" class="basic-black-btn">Add | update a curriculum</label>
                             <input type="file" id="curriculum" name="curriculum" hidden
                                 @input="form.curriculum = $event.target.files[0]"/>
                         </div>
+                        <div class="user-actions" v-else>
+                            <button class="curri">
+                                Curriculum
+                                <span class="material-symbols-outlined">download</span>
+                            </button>
+                            <button class="about">About me</button>
+                            <button class="subs">Subscribe <span>$2.88</span></button>
+                        </div>
                     </div>
                 </header>
                 <hr>
-                <section class="about">
+                <section class="about" v-if="localType == 'M'">
                     <div class="about-form">
                         <h3>About me</h3>
                         <textarea name="about" v-model="form.about" id="about" cols="30" rows="10" placeholder="Write a litle "></textarea>
@@ -47,13 +54,13 @@
                         <span v-else>With out image 😔</span>
                     </div>
                 </section>
-                <div class="update-profile-btn">
+                <div class="update-profile-btn" v-if="localType == 'M'">
                     <button type="submit" class="basic-fouth-btn">Update Profile</button>
                 </div>
             </form>
-            <section class="about-show">
+            <section class="about-show" v-if="localType == 'S'">
                 <div class="about-info">
-                    <h3>About me</h3>
+                    <h3>About {{ user.name }}</h3>
                     <p>{{ user.about }}</p>
                 </div>
                 <div class="about-image">
@@ -63,15 +70,19 @@
             </section>
             <hr>
             <section class="user-projects">
-                <div class="head">
+                <div class="head" v-if="localType == 'M'">
                     <h3>Your Proyects</h3>
                     <Link :href="route('project.create')">
                         <button class="basic-succes-btn">Add Project +</button>
                     </Link>
                 </div>
+                <div class="head-show" v-else>
+                    <h3>Some of {{ user.name }}’s projects</h3>
+                    <p>Here you can find some of the artist's most outstanding projects.</p>
+                </div>
                 <div class="projects-grid mt-2" v-if="projects.length > 0">
                     <div class="card-p" v-for="project in projects">
-                        <div class="actions">
+                        <div class="actions" v-if="localType == 'M'">
                             <Link class="show-btn" :href="route('project.show', project)">
                                 <span class="material-symbols-outlined">visibility</span>
                             </Link>
@@ -93,81 +104,38 @@
             <section class="references">
                 <div class="head">
                     <h3>References</h3>
-                    <p>Lorem Ipsum es simplemente el texto de relleno de las imprentas.</p>
+                    <p>Some refereces about the artist job</p>
                 </div>
-                <div class="references-grid">
-                    <div class="card-ref">
+                <div class="references-grid" v-if="references.length > 0">
+                    <div class="card-ref" v-for="reference in references">
                         <div class="card-ref-head">
                             <div class="user-data">
                                 <div class="user-photo-o">
-                                    <img src="./../../img/scullture.jpg" alt="">
+                                    <img :src="reference.author.perfil_photo" alt="" v-if="reference.author.perfil_photo">
+                                    <img src="../../img/user.png" alt="" v-else>
                                 </div>
-                                <span>Susan Bill</span>
+                                <span>{{ reference.author.name }}</span>
                             </div>
-                            <div class="trash-top-btn">
+                            <div class="trash-top-btn" v-if="localType == 'M' || reference.author.id === userAuth.id">
                                 <span class="material-symbols-outlined">delete</span>
                             </div>
                         </div>
                         <p>
-                            Lorem Ipsum es simplemente el texto de relleno de las imprentas. este man le mete muy rico sabe trabajar el arte como se debe bla bla bla
-                        </p>
-                    </div>
-                    <div class="card-ref">
-                        <div class="card-ref-head">
-                            <div class="user-data">
-                                <div class="user-photo-o">
-                                    <img src="./../../img/scullture.jpg" alt="">
-                                </div>
-                                <span>Susan Bill</span>
-                            </div>
-                            <div class="trash-top-btn">
-                                <span class="material-symbols-outlined">delete</span>
-                            </div>
-                        </div>
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Veniam molestias perfe
-                        </p>
-                    </div>
-                    <div class="card-ref">
-                        <div class="card-ref-head">
-                            <div class="user-data">
-                                <div class="user-photo-o">
-                                    <img src="./../../img/scullture.jpg" alt="">
-                                </div>
-                                <span>Joe Miller</span>
-                            </div>
-                            <div class="trash-top-btn">
-                                <span class="material-symbols-outlined">delete</span>
-                            </div>
-                        </div>
-                        <p>
-                            Que! chimba! de projectos WAAAAAA!!
-                        </p>
-                    </div>
-                    <div class="card-ref">
-                        <div class="card-ref-head">
-                            <div class="user-data">
-                                <div class="user-photo-o">
-                                    <img src="./../../img/scullture.jpg" alt="">
-                                </div>
-                                <span>Susan Bill</span>
-                            </div>
-                            <div class="trash-top-btn">
-                                <span class="material-symbols-outlined">delete</span>
-                            </div>
-                        </div>
-                        <p>
-                            Lorem Ipsum es simplemente el texto de relleno de las imprentas. este man le mete muy rico sabe trabajar el arte como se debe bla bla bla
+                            {{ reference.content }}
                         </p>
                     </div>
                 </div>
-                <div class="add-reference">
+                <div class="no-content" v-else>
+                    No references yet
+                </div>
+                <form @submit.prevent="makeReference" class="add-reference" v-if="localType == 'S'">
                     <div class="user-photo-o">
-                        <img src="./../../img/scullture.jpg" alt="">
+                        <img :src="userAuth.perfil_photo" alt="" v-if="userAuth.perfil_photo">
+                        <img src="../../img/user.png" alt="" v-else>
                     </div>
-                    <textarea name="reference" id="reference" placeholder="Give a reference about Daniel:" cols="30" rows="10"></textarea>
+                    <textarea name="reference" v-model="reference.comment" id="reference" :placeholder="`Give a reference about ${user.name}:`" cols="30" rows="10"></textarea>
                     <button class="basic-succes-btn">Comment</button>
-                </div>
+                </form>
             </section>
         </div>
     </AuthenticatedLayout>
@@ -196,7 +164,12 @@ export default {
         user: Object,
         projects: Object,
         projectsCount: Number,
+        references: Object,
         localType: String,
+        userAuth: {
+            Object,
+            default: null,
+        },
 
     },
 
@@ -209,6 +182,10 @@ export default {
                 about: '',
                 about_image: null,
                 _method: 'put',
+            }),
+
+            reference: useForm({
+                comment: null,
             })
         }
     },
@@ -235,6 +212,18 @@ export default {
                     }
                     if (this.form.errors.about_image) {
                         this.form.reset('about_image');
+                    }
+                },
+            });
+        },
+
+        makeReference() {
+            this.reference.post(route('reference.store', this.user), {
+                preserveScroll: true,
+                onSuccess: () => this.reference.reset(),
+                onError: () => {
+                    if (this.reference.errors.comment) {
+                        this.reference.reset('comment');
                     }
                 },
             });

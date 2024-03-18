@@ -761,6 +761,40 @@ footer {
                     }
                 }
             }
+
+            .user-actions {
+                display: flex;
+
+                button {
+                    display: flex;
+                    padding: 8px 18px;
+                    background: #5e5e5e;
+                    color: #fff;
+                    margin-right: 1rem;
+                    font-size: 1rem;
+                    font-weight: 400 !important;
+                }
+
+                .curri {
+                    background-color: var(--black);
+
+                    span {
+                        margin-left: 1rem;
+                    }
+                }
+
+                .about {
+                    background-color: var(--fouth-color);
+                }
+
+                .subs {
+                    background-color: var(--third-color);
+
+                    span {
+                        margin-left: 1rem;
+                    }
+                }
+            }
         }
 
         @media (max-width: 768px) {
@@ -848,7 +882,7 @@ footer {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 3rem;
+            padding: 5rem;
 
             h3 {
                 font-size: 2.5rem;
@@ -856,13 +890,16 @@ footer {
             }
 
             p {
-                font-size: 1.3rem;
+                font-size: 1.1rem;
+                font-weight: 300;
                 color: #cfcdcd;
-                line-height: 2rem;
-                letter-spacing: 1px;
+                text-align: justify;
                 margin-top: 2rem
             }
+
         }
+
+        @media (max-width: 800px) { grid-template-columns: 1fr; }
 
     }
 
@@ -877,6 +914,23 @@ footer {
 
             h3 {
                 font-size: 1.9rem;
+            }
+        }
+
+        .head-show {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+
+            h3 {
+                font-size: 2rem;
+            }
+
+            p {
+                font-size: 1.3rem;
+                color: #5e5e5e;
             }
         }
 
@@ -972,6 +1026,7 @@ footer {
             display: flex;
             flex-direction: column;
             width: 100%;
+            margin-bottom: 2rem;
 
             h3 {
                 font-size: 2rem;

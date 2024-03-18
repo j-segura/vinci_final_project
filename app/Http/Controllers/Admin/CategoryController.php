@@ -18,7 +18,7 @@ class CategoryController extends Controller
     {
         try {
 
-            $categories = Category::orderBy('created_at', 'desc')->paginate(2);
+            $categories = Category::orderBy('created_at', 'desc')->paginate(15);
             return Inertia::render('Admin/Categories/Index', compact('categories'));
 
         } catch (\Exception $ex) {

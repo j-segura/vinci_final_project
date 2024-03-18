@@ -1,3 +1,3 @@
 <template>
-    <span id="logo">Vinci</span>
+    <span id="logo">VINCI</span>
 </template>

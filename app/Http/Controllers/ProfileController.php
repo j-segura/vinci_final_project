@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Http\Requests\ReferenceStore;
 use App\Http\Requests\UpdateProfileManagerRequest;
 use App\Models\Project;
+use App\Models\Reference;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -70,27 +72,32 @@ class ProfileController extends Controller
 
         $projects = Project::where('author_id', auth()->user()->id)->get();
         $projectsCount = count($projects);
+        $references = Reference::with('author:id,name,perfil_photo')->where('user_id', auth()->user()->id)->get();
         $user = auth()->user();
 
         return Inertia::render('Profile/Manager', [
             'projects' => $projects,
             'user' => $user,
             'projectsCount' => $projectsCount,
+            'references' => $references,
             'localType' => 'M',
         ]);
 
     }
 
-    public function show() {
+    public function show(User $user) {
 
-        $projects = Project::where('author_id', auth()->user()->id)->get();
+        $projects = Project::where('author_id', $user->id)->get();
         $projectsCount = count($projects);
-        $user = auth()->user();
+        $userAuth = User::find(auth()->user()->id);
+        $references = Reference::with('author:id,name,perfil_photo')->where('user_id', $user->id)->get();
 
         return Inertia::render('Profile/Manager', [
             'projects' => $projects,
             'user' => $user,
+            'userAuth' => $userAuth,
             'projectsCount' => $projectsCount,
+            'references' => $references,
             'localType' => 'S',
         ]);
 
@@ -159,6 +166,32 @@ class ProfileController extends Controller
             $user->update();
 
             return redirect()->route('profile.manager')->with('success', 'Profile updated successfully.');
+
+        } catch (\Exception $ex) {
+
+            $message = 'Error en el método' . __METHOD__ . ' / ' . $ex;
+            Log::error($message);
+            return false;
+
+        }
+
+    }
+
+    public function referenceStore(ReferenceStore $request, User $user) {
+
+        try {
+
+            $data = $request->validated();
+
+            $reference = new Reference();
+
+            $reference->content = $data['comment'];
+            $reference->user_id = $user->id;
+            $reference->author_id = auth()->user()->id;
+
+            $reference->save();
+
+            return redirect()->route('profile.show', $user)->with('success', 'Reference added with successfully.');
 
         } catch (\Exception $ex) {
 

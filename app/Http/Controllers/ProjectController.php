@@ -71,8 +71,6 @@ class ProjectController extends Controller
                 $project->tags()->attach($data['tags']);
             }
 
-            /* Category::create($data); */
-
             return redirect()->route('profile.manager')->with('success', 'Category created successfully.');
 
         } catch (\Exception $ex) {

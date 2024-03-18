@@ -77,7 +77,7 @@ export default {
 
     methods: {
         submit() {
-            this.form.put(route('social-medias.update', this.socialMedia), this.form, {
+            this.form.post(route('social-medias.update', this.socialMedia), this.form, {
                 preserveScroll: true,
                 forceFormData: true,
                 onSuccess: () => this.form.reset(),

@@ -20,7 +20,7 @@
                     <td>{{ category.id }}</td>
                     <td>{{ category.name }}</td>
                     <td>
-                        <div class="portrait">
+                        <div class="portrait-ca">
                             <img v-if="category.image" :src="category.image" alt="category Logo" width="50px" height="50px" class="m-auto" />
                         </div>
                     </td>
@@ -81,7 +81,7 @@ export default {
 </script>
 
 <style>
-.portrait {
+.portrait-ca {
     width: 100px;
     height: 100px;
     overflow: hidden;
