@@ -18,12 +18,49 @@
                             <p>Projects {{ projectsCount }} | subscribers {{ user.subscribers }}</p>
                         </div>
                         <div class="user-social-medias">
-                            <a href="www.google.com" target="_black" class="social-media">
-                                <img src="./../../img/3d.jpg" alt="">
+                            <a v-for="smedia in user.social_medias" :href="smedia.pivot.url" target="_black" class="social-media" v-if="localType == 'S'">
+                                <img :src="smedia.icon" :alt="smedia.icon">
                             </a>
-                            <div class="add" v-if="localType == 'M'">
-                                <span class="material-symbols-outlined">add</span>
+                            <div v-for="smedia, index in form.socialMedias" class="social-media" v-else>
+                                <img :src="smedia.media.icon" :alt="smedia.media.icon">
+                                <button class="remove" @click.prevent="deleteSocialMedia(index)"><span class="material-symbols-outlined">delete</span></button>
                             </div>
+                            <div class="add" v-if="localType == 'M'" @click.prevent="showSocialMedia()">
+                                <span class="material-symbols-outlined" v-if="showSocialMediaForm">close</span>
+                                <span class="material-symbols-outlined" v-else>add</span>
+                            </div>
+                        </div>
+                        <div class="add-social-media-form" v-if="localType == 'M' && showSocialMediaForm">
+                            <div>
+                                <label class="typo__label">Social media</label>
+                                <multiselect
+                                    v-model="socialMedia.media"
+                                    deselect-label="Can't remove this value"
+                                    track-by="id"
+                                    label="name"
+                                    placeholder="Select one"
+                                    :options="socialMedias"
+                                    :searchable="false"
+                                    :allow-empty="false">
+                                    <template slot="singleLabel" slot-scope="{ option }">{{ option.name }}</template>
+                                </multiselect>
+                            </div>
+                            <div class="space-y-6 col-12 col-md-6">
+                                <div class="input-p">
+                                    <InputLabel for="name" value="Url *" />
+
+                                    <TextInput
+                                        id="name"
+                                        ref="nameInput"
+                                        v-model="socialMedia.url"
+                                        type="text"
+                                        class="block w-full"
+                                        placeholder="https://www.youtube.com/"
+                                        autocomplete="name-input"
+                                    />
+                                </div>
+                            </div>
+                            <button @click.prevent="addSocialMedia(socialMedia)" class="add-sm"><span class="material-symbols-outlined">add</span></button>
                         </div>
                         <div class="my-4 mt-6" v-if="localType == 'M'">
                             <label for="curriculum" class="basic-black-btn">Add | update a curriculum</label>
@@ -89,7 +126,7 @@
                             <Link :href="route('project.edit', project)" class="edit-btn">
                                 <span class="material-symbols-outlined">edit</span>
                             </Link>
-                            <div class="delete-btn">
+                            <div class="delete-btn" @click="deleteProject(project)">
                                 <span class="material-symbols-outlined">delete</span>
                             </div>
                         </div>
@@ -116,7 +153,7 @@
                                 </div>
                                 <span>{{ reference.author.name }}</span>
                             </div>
-                            <div class="trash-top-btn" v-if="localType == 'M' || reference.author.id === userAuth.id">
+                            <div class="trash-top-btn" v-if="localType == 'M' || reference.author.id === userAuth.id"  @click="deleteReference(reference)">
                                 <span class="material-symbols-outlined">delete</span>
                             </div>
                         </div>
@@ -147,12 +184,21 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import { Head } from '@inertiajs/vue3';
 import { Link } from '@inertiajs/vue3';
 import { useForm } from '@inertiajs/vue3';
+import { Inertia } from "@inertiajs/inertia";
+import Multiselect from 'vue-multiselect';
+import InputError from '@/Components/InputError.vue';
+import InputLabel from '@/Components/InputLabel.vue';
+import TextInput from '@/Components/TextInput.vue';
 
 export default {
 
     components: {
 
         AuthenticatedLayout,
+        Multiselect,
+        InputError,
+        InputLabel,
+        TextInput,
         Head,
         Link,
 
@@ -170,6 +216,10 @@ export default {
             Object,
             default: null,
         },
+        socialMedias: {
+            Object,
+            default: null,
+        },
 
     },
 
@@ -181,20 +231,43 @@ export default {
                 curriculum: null,
                 about: '',
                 about_image: null,
+                socialMedias: [],
                 _method: 'put',
             }),
 
+            socialMedia: {
+                media: null,
+                url: '',
+            },
+
             reference: useForm({
                 comment: null,
-            })
+            }),
+
+            showSocialMediaForm: false,
         }
     },
 
     mounted() {
         this.form.about = this.user.about;
+        this.form.socialMedias = this.user.social_medias.map(item => {
+            return {
+                media: {
+                    id: item.id,
+                    name: item.name,
+                    icon: item.icon
+                },
+                url: item.pivot.url
+            };
+        });
     },
 
     methods: {
+
+        showSocialMedia() {
+            this.showSocialMediaForm = !this.showSocialMediaForm;
+        },
+
         submit() {
             this.form.post(route('profile.manager.update'), this.form, {
                 preserveScroll: true,
@@ -213,6 +286,9 @@ export default {
                     if (this.form.errors.about_image) {
                         this.form.reset('about_image');
                     }
+                    if (this.form.errors.socialMedias) {
+                        this.form.reset('socialMedias');
+                    }
                 },
             });
         },
@@ -228,6 +304,34 @@ export default {
                 },
             });
         },
+
+        deleteProject(project){
+            alert('Are you sure?');
+            Inertia.delete(route('project.destroy', project), {
+                preserveScroll: true,
+                preserveState: true,
+            });
+        },
+
+        deleteReference(reference){
+            alert('Are you sure?')
+            Inertia.delete(route('references.destroy', reference), {
+                preserveScroll: true,
+                preserveState: true,
+            });
+        },
+
+        addSocialMedia(socialMedia) {
+            this.form.socialMedias.push(socialMedia);
+            this.socialMedia = {
+                media: null,
+                url: '',
+            };
+        },
+
+        deleteSocialMedia(index) {
+            this.form.socialMedias.splice(index, 1);
+        }
     },
 }
 

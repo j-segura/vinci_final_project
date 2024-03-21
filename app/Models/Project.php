@@ -16,7 +16,7 @@ class Project extends Model
     protected $guarded = [];
 
     public function categories()  {
-        return $this->belongsToMany('App\Models\Category');
+        return $this->belongsToMany('App\Models\Category', 'projects_categories');
     }
 
     public function tags()  {

@@ -20,8 +20,8 @@
                     </div>
                     <p>{{ project.description }}</p>
                     <div class="actions">
-                        <div><span class="material-symbols-outlined">thumb_up</span>{{ project.likes }}</div>
-                        <div><span class="material-symbols-outlined">chat</span>100</div>
+                        <!-- <div><span class="material-symbols-outlined">thumb_up</span>{{ project.likes }}</div> -->
+                        <div><span class="material-symbols-outlined">chat</span>{{ project.comments.length }}</div>
                     </div>
                 </div>
             </section>
@@ -120,6 +120,7 @@ export default {
         },
 
         deleteComment(comment){
+            alert('Are you sure?')
             Inertia.delete(route('comments.delete', comment), {
                 preserveScroll: true,
                 preserveState: true,

@@ -69,7 +69,8 @@ export default {
     },
 
     methods: {
-        deleteCategory(category){
+        deleteCategory(category) {
+            alert('Are you sure?');
             Inertia.delete(route('categories.destroy', category), {
                 preserveScroll: true,
                 preserveState: true,

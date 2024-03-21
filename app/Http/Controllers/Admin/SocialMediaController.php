@@ -20,7 +20,7 @@ class SocialMediaController extends Controller
     {
         try {
 
-            $socialMedias = SocialMedia::orderBy('created_at', 'desc')->paginate(2);
+            $socialMedias = SocialMedia::orderBy('created_at', 'desc')->paginate(10);
             return Inertia::render('Admin/SocialMedias/Index', compact('socialMedias'));
 
         } catch (\Exception $ex) {

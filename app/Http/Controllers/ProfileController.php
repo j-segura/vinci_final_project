@@ -7,6 +7,7 @@ use App\Http\Requests\ReferenceStore;
 use App\Http\Requests\UpdateProfileManagerRequest;
 use App\Models\Project;
 use App\Models\Reference;
+use App\Models\SocialMedia;
 use App\Models\User;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Http\RedirectResponse;
@@ -73,7 +74,8 @@ class ProfileController extends Controller
         $projects = Project::where('author_id', auth()->user()->id)->get();
         $projectsCount = count($projects);
         $references = Reference::with('author:id,name,perfil_photo')->where('user_id', auth()->user()->id)->get();
-        $user = auth()->user();
+        $user = User::where('id', auth()->user()->id)->with('socialMedias')->first();
+        $socialMedias = SocialMedia::select('id', 'name', 'icon')->get();
 
         return Inertia::render('Profile/Manager', [
             'projects' => $projects,
@@ -81,12 +83,14 @@ class ProfileController extends Controller
             'projectsCount' => $projectsCount,
             'references' => $references,
             'localType' => 'M',
+            'socialMedias' => $socialMedias,
         ]);
 
     }
 
     public function show(User $user) {
 
+        $user = User::where('id', $user->id)->with('socialMedias')->first();
         $projects = Project::where('author_id', $user->id)->get();
         $projectsCount = count($projects);
         $userAuth = User::find(auth()->user()->id);
@@ -165,6 +169,13 @@ class ProfileController extends Controller
 
             $user->update();
 
+            // asignamos redes sociales
+            $user->socialMedias()->detach();
+
+            foreach ($data['socialMedias'] as $row) {
+                $user->socialMedias()->attach($row['media']['id'], ['url' => $row['url']]);
+            }
+
             return redirect()->route('profile.manager')->with('success', 'Profile updated successfully.');
 
         } catch (\Exception $ex) {
@@ -201,6 +212,21 @@ class ProfileController extends Controller
 
         }
 
+    }
+
+    public function referenceDestroy(Reference $reference) {
+
+        try {
+
+            $reference->delete();
+
+        } catch (\Exception $ex) {
+
+            $message = 'Error en el método' . __METHOD__ . ' / ' . $ex;
+            Log::error($message);
+            return false;
+
+        }
     }
 
 }

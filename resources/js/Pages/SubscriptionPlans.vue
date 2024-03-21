@@ -1,5 +1,5 @@
 <template>
-    <Head title="Dashboard" />
+    <Head title="Plans" />
 
     <AuthenticatedLayout>
         <div id="plans">

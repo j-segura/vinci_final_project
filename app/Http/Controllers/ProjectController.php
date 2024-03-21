@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Project\StoreRequest;
+use App\Models\Category;
 use App\Models\Project;
 use App\Models\Tag;
 use Illuminate\Http\Request;
@@ -28,8 +29,9 @@ class ProjectController extends Controller
 
         try {
 
+            $categories = Category::select('id', 'name')->get();
             $tags = Tag::select('id', 'name')->get();
-            return Inertia::render('Project/Create', compact('tags'));
+            return Inertia::render('Project/Create', compact('tags', 'categories'));
 
         } catch (\Exception $ex) {
 
@@ -65,13 +67,18 @@ class ProjectController extends Controller
 
             $project->save();
 
+            $data['categories'] = array_column($data['categories'], 'id');
             $data['tags'] = array_column($data['tags'], 'id');
+
+            if ($data['categories']) {
+                $project->categories()->attach($data['categories']);
+            }
 
             if ($data['tags']) {
                 $project->tags()->attach($data['tags']);
             }
 
-            return redirect()->route('profile.manager')->with('success', 'Category created successfully.');
+            return redirect()->route('profile.manager')->with('success', 'Project created successfully.');
 
         } catch (\Exception $ex) {
 
@@ -90,9 +97,7 @@ class ProjectController extends Controller
         try {
 
             $project = Project::with('tags:id,name', 'author:id,name', 'comments.author:id,name,perfil_photo')->where('id', $project->id)->first();
-
             $moreProjects = Project::where('author_id', $project->author_id)->take(4)->get();
-
             $authUser = auth()->user()->id;
 
             return Inertia::render('Project/Show', [
@@ -116,13 +121,14 @@ class ProjectController extends Controller
     public function edit(Project $project)
     {
 
-        $project = Project::with('tags:id,name')->where('id', $project->id)->first();
-
         try {
 
+            $project = Project::with('tags:id,name', 'categories:id,name')->where('id', $project->id)->first();
+            $categories = Category::select('id', 'name')->get();
             $tags = Tag::select('id', 'name')->get();
             return Inertia::render('Project/Edit', [
                 'project' => $project,
+                'categories' => $categories,
                 'tags' => $tags
             ]);
 
@@ -164,14 +170,20 @@ class ProjectController extends Controller
 
             $project->save();
 
+            $data['categories'] = array_column($data['categories'], 'id');
             $data['tags'] = array_column($data['tags'], 'id');
+
+            if ($data['categories']) {
+                $project->categories()->detach($project->categories);
+                $project->categories()->attach($data['categories']);
+            }
 
             if ($data['tags']) {
                 $project->tags()->detach($project->tags);
                 $project->tags()->attach($data['tags']);
             }
 
-            return redirect()->route('profile.manager')->with('success', 'Category created successfully.');
+            return redirect()->route('profile.manager')->with('success', 'Project created successfully.');
 
         } catch (\Exception $ex) {
 
@@ -185,8 +197,19 @@ class ProjectController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Project $project)
     {
-        //
+        try {
+
+            $project->delete();
+            return redirect()->route('profile.manager')->with('success', 'Project deleted successfully.');
+
+        } catch (\Exception $ex) {
+
+            $message = 'Error en el método' . __METHOD__ . ' / ' . $ex;
+            Log::error($message);
+            return false;
+
+        }
     }
 }

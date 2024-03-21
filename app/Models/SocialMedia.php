@@ -14,4 +14,9 @@ class SocialMedia extends Model
     protected $dates = ['created_at', 'updated_at'];
 
     protected $guarded = [];
+
+    public function users()
+    {
+        return $this->belongsToMany('App\Models\User', 'social_medias_users', 'social_media_id', 'user_id')->withPivot('url');
+    }
 }

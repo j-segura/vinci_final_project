@@ -62,13 +62,16 @@ Route::post('/project', [ProjectController::class, 'store'])->name('project.stor
 Route::get('/project/{project}/edit', [ProjectController::class, 'edit'])->name('project.edit');
 Route::put('/project/{project}', [ProjectController::class, 'update'])->name('project.update');
 Route::get('/project/{project}', [ProjectController::class, 'show'])->name('project.show');
+Route::delete('/project/{project}', [ProjectController::class, 'destroy'])->name('project.destroy');
 
 Route::get('/profile/manager', [ProfileController::class, 'manager'])->name('profile.manager');
 Route::get('/profile/show/{user}', [ProfileController::class, 'show'])->name('profile.show');
 Route::post('/profile/reference/{user}', [ProfileController::class, 'referenceStore'])->name('reference.store');
+Route::delete('/profile/reference/{reference}', [ProfileController::class, 'referenceDestroy'])->name('references.destroy');
 
 Route::post('/project/comment/{project}', [CommentController::class, 'store'])->name('comments.store');
 Route::delete('/project/comment/{comment}', [CommentController::class, 'destroy'])->name('comments.delete');
 
+Route::get('/category/{category}', [HomeController::class, 'category'])->name('category.show');
 
 require __DIR__.'/auth.php';

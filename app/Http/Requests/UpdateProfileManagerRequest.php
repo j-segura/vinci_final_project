@@ -26,6 +26,7 @@ class UpdateProfileManagerRequest extends FormRequest
             'curriculum' => 'nullable|file|mimes:pdf',
             'perfil_photo' => 'nullable|image',
             'about_image' => 'nullable|image',
+            'socialMedias' => 'nullable',
         ];
     }
 }

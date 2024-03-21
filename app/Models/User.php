@@ -43,8 +43,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function socialMedias() {
-        return $this->hasMany(SocialMedia::class);
+    public function socialMedias()
+    {
+        return $this->belongsToMany(SocialMedia::class, 'social_medias_users', 'user_id', 'social_media_id')->withPivot('url');
     }
 
     public function authoredReferences()

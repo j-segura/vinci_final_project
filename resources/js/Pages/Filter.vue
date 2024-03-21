@@ -1,36 +1,13 @@
 <template>
-    <Head title="Home" />
+    <Head title="Filter" />
 
     <AuthenticatedLayout>
-        <div class="header">
-            <div class="header-img">
-                <img src="./../img/header-bg.jpg" alt="">
-            </div>
-            <div class="header-content">
-                <h1>Find your favorite artist</h1>
-                <div class="search-bar">
-                    <input type="search" placeholder="Search for someone...">
-                    <button></button>
-                </div>
-                <p>More than 1000 artists, designers & creative people</p>
-            </div>
-        </div>
         <div class="sub-title">
-            <h2>Look for a Category</h2>
-            <p>Here you will find all the categories we have available</p>
-        </div>
-        <section id="categories">
-            <Link class="category" v-for="category in categories" :href="route('category.show', category)">
-                <img :src="category.image" alt="category">
-                <span>{{ category.name }}</span>
-            </Link>
-        </section>
-        <div class="sub-title">
-            <h2 class="text-center">Choose from the best</h2>
+            <h2 class="text-center">{{ category.name }}</h2>
             <p class="text-center">Looking for a good artist? find him below</p>
         </div>
         <section id="works-index">
-            <div class="work-card" v-for="project in projects.data">
+            <div class="work-card" v-for="project in category.projects">
                 <Link class="user-info" :href="route('profile.show', project.author)">
                     <div class="user-picture">
                         <img :src="project.author.perfil_photo" alt="" v-if="project.author.perfil_photo">
@@ -46,7 +23,6 @@
                 </div>
             </div>
         </section>
-        <Paginator :links="projects.links" class="margin-b"/>
         <footer></footer>
     </AuthenticatedLayout>
 </template>
@@ -70,8 +46,7 @@ export default {
     },
 
     props: {
-        categories: Object,
-        projects: Object,
+        category: Object,
     },
 
 }
